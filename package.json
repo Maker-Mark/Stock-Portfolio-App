@@ -4,7 +4,8 @@
   "description": "Stock Portfolio App is a small MERN(MongoDB, Express.js, React.js, Node.js) Fullstack application for adding, removing and tracking stocks",
   "main": "index.js",
   "scripts": {
-    "test": "nodemon index.js"
+    "test": "",
+    "dev": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -18,5 +19,11 @@
   "bugs": {
     "url": "https://github.com/Maker-Mark/Stock-Portfolio-App/issues"
   },
-  "homepage": "https://github.com/Maker-Mark/Stock-Portfolio-App#readme"
+  "homepage": "https://github.com/Maker-Mark/Stock-Portfolio-App#readme",
+  "devDependencies": {
+    "nodemon": "^1.19.3"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
