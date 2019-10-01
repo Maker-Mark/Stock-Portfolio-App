@@ -1,4 +1,5 @@
 const express = require("express");
+const fetch = require("node-fetch");
 // const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -78,22 +79,32 @@ router.post("/register", async (req, res) => {
 router.post("/buy", async (req, res) => {
   //Pull out the ticker and number of stocks the user asked to buy
   const { ticker, numStocks, email } = req.body;
-
+  const apiResponse = await fetch(
+    `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${ticker}&apikey=${process.env.API_KEY}`
+  );
+  let data = await apiResponse.json();
+  data = data["Global Quote"];
+  console.log(data);
   //Verify the current user's balance from the db
-  const user = User.findOne({
+  const user = await User.findOne({
     email
   });
-  console.log(user);
-  const bal = user;
-
+  // console.log(user);
+  const bal = user.balance;
+  const totalPrice = numStocks * parseInt(data["05. price"]);
+  let bought = false;
+  // console.log(bal);
   ///Check that they have enough money, we can send api response if they don't, and the front end can use that response to display the message.
+  console.log(data);
+  if (bal > totalPrice) {
+    console.log("bal" + bal);
+    console.log("price" + totalPrice);
+    console.log("you can buy it!");
+    bought = true;
+  } else {
+    console.log("you cant afford this!");
+  }
 
-  const apiResponse = await fetch(
-    `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${req.params.ticker}&apikey=${process.env.API_KEY}`
-  );
-
-  price;
-  let data = await apiResponse.json();
   //   console.log(stuff);
   res.json(data);
 });
