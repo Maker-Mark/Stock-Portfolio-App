@@ -14,9 +14,7 @@ const userSchema = new mongoose.Schema({
     type: Number,
     default: 5000
   },
-  transactions: {
-    list: []
-  }
+  transactions: []
 });
 
 //Export the model using the schema above

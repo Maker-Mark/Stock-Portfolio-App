@@ -82,20 +82,32 @@ router.post("/buy", async (req, res) => {
   const apiResponse = await fetch(
     `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${ticker}&apikey=${process.env.API_KEY}`
   );
+
   let data = await apiResponse.json();
+  //Pull out the isolated day's data
   data = data["Global Quote"];
-  console.log(data);
-  //Verify the current user's balance from the db
+
+  //Build a transaction from the data
+  const transaction = {
+    symbol: data["01. symbol"],
+    price: data["05. price"]
+  };
+  console.log(transaction);
+  //Verify the current user's balance from the db by grabbing the record
   const user = await User.findOne({
     email
   });
-  // console.log(user);
+
+  //Grab the balance
   const bal = user.balance;
+  //Calculate the total purchase
   const totalPrice = numStocks * parseInt(data["05. price"]);
+
+  //Initialize a boolean to flag if the sale goes though(meaning they have enough money)
   let bought = false;
-  // console.log(bal);
+
   ///Check that they have enough money, we can send api response if they don't, and the front end can use that response to display the message.
-  console.log(data);
+  // console.log(data);
   if (bal > totalPrice) {
     console.log("bal" + bal);
     console.log("price" + totalPrice);
@@ -104,6 +116,20 @@ router.post("/buy", async (req, res) => {
   } else {
     console.log("you cant afford this!");
   }
+
+  // console.log(user);
+  // Meaning the user can afford to buy these stocks
+  let userTrans = user.transactions;
+  console.log("user trans" + userTrans);
+  // console.log(userTrans.push(transaction));
+
+  if (bought) {
+    user.balance = user.balance - totalPrice;
+    userTrans.push(transaction);
+    user.transactions = userTrans;
+  }
+  console.log(user.transactions);
+  user.save();
 
   //   console.log(stuff);
   res.json(data);
