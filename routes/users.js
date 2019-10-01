@@ -90,7 +90,9 @@ router.post("/buy", async (req, res) => {
   //Build a transaction from the data
   const transaction = {
     symbol: data["01. symbol"],
-    price: data["05. price"]
+    price: data["05. price"],
+    quantity: numStocks,
+    date: Date.now()
   };
   console.log(transaction);
   //Verify the current user's balance from the db by grabbing the record
