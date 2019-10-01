@@ -25,4 +25,4 @@ const stockSchema = new mongoose.Schema({
 });
 
 //Export the model using the schema above
-module.exports = mongoose.model("stock", userSchema);
+module.exports = mongoose.model("stock", stockSchema);

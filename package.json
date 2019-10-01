@@ -28,6 +28,7 @@
     "config": "^3.2.2",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.7.3"
+    "mongoose": "^5.7.3",
+    "node-fetch": "^2.6.0"
   }
 }
