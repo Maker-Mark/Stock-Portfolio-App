@@ -75,4 +75,27 @@ router.post("/register", async (req, res) => {
   }
 }); //Note that "/" here refers to the prefix of "api/users" + "/"
 
+router.post("/buy", async (req, res) => {
+  //Pull out the ticker and number of stocks the user asked to buy
+  const { ticker, numStocks, email } = req.body;
+
+  //Verify the current user's balance from the db
+  const user = User.findOne({
+    email
+  });
+  console.log(user);
+  const bal = user;
+
+  ///Check that they have enough money, we can send api response if they don't, and the front end can use that response to display the message.
+
+  const apiResponse = await fetch(
+    `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${req.params.ticker}&apikey=${process.env.API_KEY}`
+  );
+
+  price;
+  let data = await apiResponse.json();
+  //   console.log(stuff);
+  res.json(data);
+});
+
 module.exports = router;
