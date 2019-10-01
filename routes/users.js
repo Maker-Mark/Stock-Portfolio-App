@@ -12,22 +12,23 @@ const User = require("../models/User");
 router.post("/register", async (req, res) => {
   //Pull out the data from the request body
   //Check to see if there is a user with that email
+
+  const { email, password } = req.body;
+  console.log(req.body);
+  if (!password) {
+    res.status(400).json({ msg: "No password was provided" });
+  }
+  if (!email) {
+    res.status(400).json({ msg: "No email was provided" });
+  }
   try {
-    const { email, password } = req.body;
-    console.log(req.body);
-    if (!password) {
-      res.status(400).send("No password was provided");
-    }
-    if (!email) {
-      res.status(400).send("No email was provided");
-    }
     let user = await User.findOne({
       email
     });
     //Go though the MongoDB and see if the email is already registered
     if (user) {
       return res.status(400).json({
-        msg: `Email ${email} already in use!`
+        msg: `Email ${email} is already in use!`
       });
     }
 
