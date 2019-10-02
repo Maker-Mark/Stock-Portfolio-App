@@ -4,7 +4,7 @@ import axios from "axios";
 import Button from "react-bootstrap/Button";
 import Transaction from "../components/Transaction";
 
-const Home = props => {
+const Transactions = props => {
   const [trans, setTrans] = useState([]);
 
   // const { name, email, password } = home;
@@ -33,9 +33,7 @@ const Home = props => {
 
   return (
     <div>
-      <div>Hello from the home page!</div>
-      <Button onClick={logout}>Logout </Button>
-
+      <h1>Transactions</h1>
       <ul>
         {trans.map(trn => {
           return (
@@ -52,4 +50,4 @@ const Home = props => {
   );
 };
 
-export default Home;
+export default Transactions;

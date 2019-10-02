@@ -7,12 +7,12 @@ const Transaction = props => {
   return (
     <>
       <Card style={{ width: "18rem" }}>
-        <Card.Header>Featured</Card.Header>
-        <ListGroup variant="flush">
-          <ListGroup.Item>{props.price}</ListGroup.Item>
-          <ListGroup.Item>{props.ticker}</ListGroup.Item>
-          <ListGroup.Item>{props.quantity}</ListGroup.Item>
-        </ListGroup>
+        <Card>
+          <Card.Body>
+            {props.action} {props.quantity} {props.ticker} Stocks @{" "}
+            {props.price}
+          </Card.Body>
+        </Card>
       </Card>
     </>
   );

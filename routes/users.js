@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const config = require("config");
 const router = express.Router();
+const auth = require("../middleware/RequiredAuth");
 const User = require("../models/User");
 
 /**
@@ -14,8 +15,9 @@ router.post("/register", async (req, res) => {
   //Pull out the data from the request body
   //Check to see if there is a user with that email
 
-  const { email, password, name } = req.body;
-  // console.log(req.body);
+  let { email, password, name } = req.body;
+  // console.log(req.body)
+  email = email.toLowerCase();
 
   try {
     let user = await User.findOne({
@@ -80,6 +82,7 @@ router.post("/register", async (req, res) => {
 router.post("/buy", async (req, res) => {
   //Pull out the ticker and number of stocks the user asked to buy
   const { ticker, numStocks, email } = req.body;
+
   const apiResponse = await fetch(
     `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${ticker}&apikey=${process.env.API_KEY}`
   );
@@ -93,7 +96,7 @@ router.post("/buy", async (req, res) => {
     symbol: data["01. symbol"],
     price: data["05. price"],
     quantity: numStocks,
-    date: Date.now()
+    action: "BUY"
   };
   console.log(transaction);
   //Verify the current user's balance from the db by grabbing the record
@@ -136,6 +139,18 @@ router.post("/buy", async (req, res) => {
 
   //   console.log(stuff);
   res.json(data);
+});
+
+//Get a user
+router.get("/", auth, async (req, res) => {
+  try {
+    const id = req.id;
+    const user = await User.findById(id).select("-password"); // Return all but the PW
+    res.json(user);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
 });
 
 module.exports = router;

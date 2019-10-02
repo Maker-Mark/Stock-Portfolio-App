@@ -6,6 +6,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Home from "./components/Home";
 import "./App.css";
+import Transactions from "./components/Transactions";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
         <Route exact path="/" component={Register} />
         {/* <Route exact path="/login" component={Login} /> */}
         <Route exact path="/home" component={Home} />
+        <Route exact path="/transactions" component={Transactions} />
       </Router>
     </Fragment>
   );
