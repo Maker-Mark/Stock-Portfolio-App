@@ -14,14 +14,9 @@ router.post("/register", async (req, res) => {
   //Pull out the data from the request body
   //Check to see if there is a user with that email
 
-  const { email, password } = req.body;
-  console.log(req.body);
-  if (!password) {
-    res.status(400).json({ msg: "No password was provided" });
-  }
-  if (!email) {
-    res.status(400).json({ msg: "No email was provided" });
-  }
+  const { email, password, name } = req.body;
+  // console.log(req.body);
+
   try {
     let user = await User.findOne({
       email
@@ -36,14 +31,20 @@ router.post("/register", async (req, res) => {
     //If the email is not already in use make the user
     user = new User({
       email,
-      password
+      password,
+      name
     });
 
     //Use bcrypt for password encryption, returns a promise
-    const salt = await bcrypt.genSalt(10); //The salt is needed for encryption
+    //The salt is needed for encryption
+    const salt = await bcrypt
+      .genSalt(10)
+      .catch(err => console.error("Bcrypt Err:" + err.message));
 
     //Gives us a hashed version of the password
-    user.password = await bcrypt.hash(password, salt);
+    user.password = await bcrypt
+      .hash(password, salt)
+      .catch(err => console.error("Bcrypt Err:" + err.message));
 
     //Save it in our db
     await user.save();
@@ -71,10 +72,10 @@ router.post("/register", async (req, res) => {
       }
     );
   } catch (err) {
-    console.error(err.message);
+    console.log(err.message);
     res.status(500).send("Server Error");
   }
-}); //Note that "/" here refers to the prefix of "api/users" + "/"
+});
 
 router.post("/buy", async (req, res) => {
   //Pull out the ticker and number of stocks the user asked to buy
@@ -106,7 +107,7 @@ router.post("/buy", async (req, res) => {
   const totalPrice = numStocks * parseInt(data["05. price"]);
 
   //Initialize a boolean to flag if the sale goes though(meaning they have enough money)
-  let bought = false;
+  let didBuy = false;
 
   ///Check that they have enough money, we can send api response if they don't, and the front end can use that response to display the message.
   // console.log(data);
@@ -114,7 +115,7 @@ router.post("/buy", async (req, res) => {
     console.log("bal" + bal);
     console.log("price" + totalPrice);
     console.log("you can buy it!");
-    bought = true;
+    didBuy = true;
   } else {
     console.log("you cant afford this!");
   }
@@ -125,7 +126,7 @@ router.post("/buy", async (req, res) => {
   console.log("user trans" + userTrans);
   // console.log(userTrans.push(transaction));
 
-  if (bought) {
+  if (didBuy) {
     user.balance = user.balance - totalPrice;
     userTrans.push(transaction);
     user.transactions = userTrans;

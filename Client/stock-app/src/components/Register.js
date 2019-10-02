@@ -1,52 +1,52 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "../styles/Login.css";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Register = () => {
-  //   this.state = {
-  //     location: "",
-  //     email: "",
-  //     password: "",
-  //     retype: ""
-  //   };
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+    name: ""
+  });
 
-  const formHandler = e => {
-    console.log(this.state[e.target.id]);
-    this.setState({ [e.target.id]: e.target.value });
+  const { name, email, password } = user;
+
+  const onChange = e => {
+    setUser({ ...user, [e.target.name]: e.target.value });
+    console.log(user);
   };
 
-  //   const submitHandler = () => {
-  //     sessionStorage.setItem("price", 4);
-  //     sessionStorage.setItem("coffee", "black");
-  //     //this sends the information to the sign up api
-  //     const { location, email, password, retype } = this.state;
-
-  //     if (password === retype) {
-  //       axios
-  //         .post("https://local-roasters-api.herokuapp.com/users/signup", {
-  //           email: email,
-  //           password: password,
-  //           location: location,
-  //           coffee: sessionStorage.getItem("coffee"),
-  //           price: sessionStorage.getItem("price")
-  //         })
-  //         .then(res => localStorage.setItem("token", res.data.token))
-  //         .then(() => this.props.history.push("/dashboard"))
-  //         .catch(error => console.log(error));
-  //     } else {
-  //       alert("The passwords do not match");
-  //     }
-  //   };
+  const onSubmit = e => {
+    console.log(e);
+    e.preventDefault();
+    if (name === "" || email === "" || password === "") {
+      console.log("Please enter all fields danger");
+    } else {
+      console.log(user);
+      axios
+        .post("users/register", {
+          name: user.name,
+          email: user.email,
+          password: user.password
+        })
+        .then(res => {
+          console.log(res);
+          console.log();
+        })
+        .catch(err => console.error("here" + err.message));
+    }
+  };
 
   return (
-    <Form className="m-5">
+    <Form className="m-5" onSubmit={onSubmit}>
       <Form.Group controlId="formBasic">
         <Form.Label>Name</Form.Label>
         <Form.Control
-          value={this.state.name}
-          onChange={e => this.formHandler(e)}
+          name="name"
+          onChange={onChange}
           type="text"
           placeholder="Enter your name"
           required
@@ -55,8 +55,8 @@ const Register = () => {
       <Form.Group controlId="formBasicEmail">
         <Form.Label>Email address</Form.Label>
         <Form.Control
-          value={this.state.email}
-          onChange={e => this.formHandler(e)}
+          name="email"
+          onChange={onChange}
           type="email"
           placeholder="Enter email"
           required
@@ -68,8 +68,8 @@ const Register = () => {
       <Form.Group controlId="formBasicPassword">
         <Form.Label>Password</Form.Label>
         <Form.Control
-          value={this.state.email}
-          onChange={e => this.formHandler(e)}
+          name="password"
+          onChange={onChange}
           type="password"
           placeholder="Password"
           required
@@ -85,4 +85,4 @@ const Register = () => {
   );
 };
 
-export default Login;
+export default Register;

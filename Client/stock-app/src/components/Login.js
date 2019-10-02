@@ -11,7 +11,7 @@ const Login = () => {
     password: ""
   });
 
-  const { name, email, password } = user;
+  const { email, password } = user;
 
   const onChange = e => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -21,7 +21,7 @@ const Login = () => {
   const onSubmit = e => {
     console.log(e);
     e.preventDefault();
-    if (name === "" || email === "" || password === "") {
+    if (email === "" || password === "") {
       console.log("Please enter all fields danger");
     } else {
       console.log("Pgoogd");
@@ -30,16 +30,6 @@ const Login = () => {
 
   return (
     <Form className="m-5" onSubmit={onSubmit}>
-      <Form.Group controlId="formBasic">
-        <Form.Label>Name</Form.Label>
-        <Form.Control
-          name="name"
-          onChange={onChange}
-          type="text"
-          placeholder="Enter your name"
-          required
-        />
-      </Form.Group>
       <Form.Group controlId="formBasicEmail">
         <Form.Label>Email address</Form.Label>
         <Form.Control
