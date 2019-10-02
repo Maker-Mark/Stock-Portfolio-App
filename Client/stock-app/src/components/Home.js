@@ -15,9 +15,39 @@ const Home = props => {
     })
       // .then(res => console.log(res))
       .then(res => {
-        console.log(res.data.transactions);
-        let transArr = res.data.transactions;
-        setTrans(transArr);
+        console.log(res.data.portfolio.stocks);
+        let stockArr = res.data.portfolio.stocks;
+        let total = 0;
+        console.log("STK ARR");
+        console.log(stockArr);
+
+        axios(
+          `https://www.alphavantage.co/query?function=BATCH_STOCK_QUOTES&apikey=W1R2GKR6A741MTP0&symbols=MSFT,AAPL,FB`
+        ).then(res => {
+          // Array of current prices of stocks
+          let priceArr = res.data["Stock Quotes"];
+          //For each stock, multiply how many we have buy the price
+          priceArr.forEach(stk => {
+            let subTotal = 0;
+            console.log(stk);
+            let numStocks = [];
+            numStocks = stockArr.forEach(stock => {
+              if (stock["symbol"] == stk["1. symbol"]) {
+                subTotal = 0;
+                subTotal += stk["2. price"] * stock["quantity"];
+                // console.log(stock);
+                console.log(subTotal);
+                total += subTotal;
+              }
+            });
+
+            // total += parseInt(stk["2. price"]);
+          });
+          // total += parseInt(price);
+          console.log(total);
+        });
+
+        // stockArr.forEach((stk)=>{
       })
 
       //If we dont have a token
@@ -33,7 +63,8 @@ const Home = props => {
 
   return (
     <div>
-      <div>Hello from the home page!</div>
+      <h1>Portfolio</h1>
+      <hr></hr>
       <Button onClick={logout}>Logout </Button>
 
       <ul>

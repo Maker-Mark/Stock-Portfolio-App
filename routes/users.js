@@ -81,8 +81,9 @@ router.post("/register", async (req, res) => {
 
 router.post("/buy", async (req, res) => {
   //Pull out the ticker and number of stocks the user asked to buy
-  const { ticker, numStocks, email } = req.body;
-
+  let { ticker, numStocks, email } = req.body;
+  email = email.toLowerCase();
+  console.log(email);
   const apiResponse = await fetch(
     `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${ticker}&apikey=${process.env.API_KEY}`
   );
@@ -99,44 +100,56 @@ router.post("/buy", async (req, res) => {
     action: "BUY"
   };
   console.log(transaction);
-  //Verify the current user's balance from the db by grabbing the record
-  const user = await User.findOne({
-    email
-  });
 
-  //Grab the balance
-  const bal = user.balance;
-  //Calculate the total purchase
-  const totalPrice = numStocks * parseInt(data["05. price"]);
+  try {
+    //Verify the current user's balance from the db by grabbing the record
+    const user = await User.findOne({
+      email
+    });
 
-  //Initialize a boolean to flag if the sale goes though(meaning they have enough money)
-  let didBuy = false;
+    //Grab the balance
+    const bal = user.balance;
+    //Calculate the total purchase
+    const totalPrice = numStocks * parseInt(data["05. price"]);
 
-  ///Check that they have enough money, we can send api response if they don't, and the front end can use that response to display the message.
-  // console.log(data);
-  if (bal > totalPrice) {
-    console.log("bal" + bal);
-    console.log("price" + totalPrice);
-    console.log("you can buy it!");
-    didBuy = true;
-  } else {
-    console.log("you cant afford this!");
+    //Initialize a boolean to flag if the sale goes though(meaning they have enough money)
+    let didBuy = false;
+
+    ///Check that they have enough money, we can send api response if they don't, and the front end can use that response to display the message.
+    // console.log(data);
+    if (bal > totalPrice) {
+      console.log("bal" + bal);
+      console.log("price" + totalPrice);
+      console.log("you can buy it!");
+      didBuy = true;
+    } else {
+      console.log("you cant afford this!");
+    }
+
+    // console.log(user);
+    // Meaning the user can afford to buy these stocks
+    let userTrans = user.transactions;
+    let currentStocks = user.portfolio.stocks;
+    let portfolioStocks = user.portfolio.stocks;
+    let stockInfo = {
+      symbol: transaction.symbol,
+      quantity: transaction.quantity
+    };
+    if (didBuy) {
+      user.balance = user.balance - totalPrice;
+      userTrans.push(transaction);
+      user.transactions = userTrans;
+      user.portfolio.stocks = portfolioStocks;
+      currentStocks.push(stockInfo);
+      user.portfolio.stocks = currentStocks;
+      let newVal = transaction.quantity * transaction.price;
+      user.portfolio.totalValue = user.portfolio.totalValue + newVal;
+    }
+    console.log(user.transactions);
+    user.save();
+  } catch (err) {
+    res.status(500).send("Server Error");
   }
-
-  // console.log(user);
-  // Meaning the user can afford to buy these stocks
-  let userTrans = user.transactions;
-  console.log("user trans" + userTrans);
-  // console.log(userTrans.push(transaction));
-
-  if (didBuy) {
-    user.balance = user.balance - totalPrice;
-    userTrans.push(transaction);
-    user.transactions = userTrans;
-  }
-  console.log(user.transactions);
-  user.save();
-
   //   console.log(stuff);
   res.json(data);
 });

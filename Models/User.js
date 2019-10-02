@@ -16,7 +16,14 @@ const userSchema = new mongoose.Schema({
     type: Number,
     default: 5000
   },
-  transactions: []
+  transactions: [],
+  portfolio: {
+    totalValue: {
+      type: Number,
+      default: 0
+    },
+    stocks: []
+  }
 });
 
 //Export the model using the schema above
