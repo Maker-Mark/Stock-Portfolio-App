@@ -7,7 +7,7 @@ const StockNavbar = () => {
   return (
     <>
       <Navbar bg="dark" variant="dark">
-        <Navbar.Brand href="#home">
+        <Navbar.Brand href="/home">
           <img
             alt=""
             src="/img/logo512.png"
