@@ -12,7 +12,7 @@ class Portfolio extends Component {
       portfolio: props.stocks,
       arr: [],
       totalValue: 0,
-      done: null
+      done: false
     };
   }
 
