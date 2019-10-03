@@ -1,9 +1,14 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Link, Switch } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-
+import Button from "react-bootstrap/Button";
 const StockNavbar = () => {
+  const logout = () => {
+    localStorage.clear();
+    window.location.href = "/";
+  };
+
   return (
     <>
       <Navbar bg="dark" variant="dark">
@@ -26,9 +31,15 @@ const StockNavbar = () => {
           </Link>
         </Nav>
         <Nav>
-          <Link className="nav-link" to="/home">
-            Logout
-          </Link>
+          {localStorage.getItem("token") ? (
+            <Button onClick={logout} className="nav-link" to="/home">
+              Logout
+            </Button>
+          ) : (
+            <Button href="/login" className="nav-link" to="/login">
+              Login/Register
+            </Button>
+          )}
         </Nav>
       </Navbar>
     </>
