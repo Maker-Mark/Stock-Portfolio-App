@@ -8,3 +8,4 @@ deploy:
   app: oscar-stock-api
   on:
     repo: Maker-Mark/Stock-Portfolio-App
+    branch:master
