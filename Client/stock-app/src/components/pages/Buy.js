@@ -26,7 +26,7 @@ const Buy = props => {
     } else {
       axios
         .post(
-          "users/buy",
+          "https://oscar-stock-app.herokuapp.com/users/buy",
           {
             ticker: symbol,
             numStocks: quantity,
