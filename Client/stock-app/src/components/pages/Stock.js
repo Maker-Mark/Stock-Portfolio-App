@@ -18,7 +18,7 @@ const Stock = props => {
         <Card>
           <Card.Body>
             + You own {props.quantity} {props.ticker} Stocks, currently valued
-            at {props.val}
+            at {props.val.toFixed(2)}
           </Card.Body>
         </Card>
       </Card>
@@ -37,7 +37,7 @@ const Stock = props => {
         <Card>
           <Card.Body>
             - You own {props.quantity} {props.ticker} Stocks valued at{" "}
-            {props.val}
+            {props.val.toFixed(2)}
           </Card.Body>
         </Card>
       </Card>
@@ -56,7 +56,7 @@ const Stock = props => {
         <Card>
           <Card.Body>
             = You own {props.quantity} {props.ticker} Stocks valued at{" "}
-            {props.val}
+            {props.val.toFixed(2)}
           </Card.Body>
         </Card>
       </Card>

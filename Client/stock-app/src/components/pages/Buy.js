@@ -38,6 +38,12 @@ const Buy = props => {
           { headers: { "x-auth-token": localStorage.getItem("token") } }
         )
         .then(res => {
+          console.log(res.data);
+          if (res.data["msg"]) {
+            alert("You dont have enough cash for this purchase");
+          } else if (!res.data) {
+            alert("API limit reached, try in 60 seconds");
+          }
           window.location.replace("/home");
         })
         .catch(err => console.error("Login Error:" + err.message));
@@ -79,6 +85,9 @@ const Buy = props => {
       <Button variant="danger" type="submit">
         Buy Stocks
       </Button>
+      <Form.Text className="text-muted" style={{ fontSize: "14px" }}>
+        Button not working? Try again in 60 seconds. API limit reached :(
+      </Form.Text>
     </Form>
   );
 };

@@ -17,35 +17,6 @@ class Search extends Component {
     };
   }
 
-  componentWillMount() {
-    let keyArr = [
-      "0EX3ARX88UZQUM6S",
-      "AROSSVE5EUMIFC2R",
-      "6H07TY259E6KEHOB",
-      "C2WWKDFUHBF8U3Y5",
-      "L6ANE8LWW6JC86IS",
-      "H9T98BB8N5I98JP3",
-      "VWV1SPC91RD4DF6N",
-      "P6M5XDBD1ZABM0R3",
-      "0EX3ARX88UZQUM6S",
-      "AROSSVE5EUMIFC2R",
-      "6H07TY259E6KEHOB",
-      "C2WWKDFUHBF8U3Y5",
-      "L6ANE8LWW6JC86IS",
-      "H9T98BB8N5I98JP3",
-      "VWV1SPC91RD4DF6N",
-      "P6M5XDBD1ZABM0R3",
-      "FSRE5MEMUBOYXNHN"
-    ];
-    axios
-      .get(
-        "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=BA&apikey=demo"
-      )
-      .then(response => {
-        console.log(response.data["bestMatches"]);
-        this.setState({ data: response.data["bestMatches"] });
-      });
-  }
   handleChange = event => {
     let keyArr = [
       "0EX3ARX88UZQUM6S",
@@ -87,10 +58,9 @@ class Search extends Component {
       return (
         <div>
           <Form className="m-5">
-            <h2> Ticker Symbol Search</h2>
+            <h1> Ticker Symbol Search</h1>
             <hr />
             <h3> Results</h3>
-
             <input type="text" onChange={this.handleChange} />
             <FilterResults
               value={value}
@@ -99,13 +69,19 @@ class Search extends Component {
                 <div>
                   {results.map(el => (
                     <div>
-                      <span>{el["1. symbol"]}</span>
-                      <span>{el["marketOpen"]}</span>
+                      Ticker Symbol:{" "}
+                      <strong>
+                        <span>{el["1. symbol"]}: </span>
+                      </strong>{" "}
+                      Name: <span>{el["2. name"]}</span>
                     </div>
                   ))}
                 </div>
               )}
             />
+            <Form.Text className="text-muted" style={{ fontSize: "14px" }}>
+              No results? Try again in 60 seconds(API limit reached).
+            </Form.Text>
           </Form>
         </div>
       );
@@ -113,7 +89,7 @@ class Search extends Component {
       return (
         <div>
           <Form className="m-5">
-            <h2> Ticker Symbol Search </h2>
+            <h1> Ticker Symbol Search </h1>
             <hr />
             <h3>Enter a Symbol</h3>
             <input type="text" value={value} onChange={this.handleChange} />

@@ -1,7 +1,10 @@
 import React, { Component, useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { Link } from "react-router-dom";
+
 // import "../styles/Login.css";
+
 // import { Route, Link } from "react-router-dom";
 import axios from "axios";
 
@@ -44,52 +47,61 @@ const Register = () => {
     }
   };
 
-  return (
-    <div className="Login">
-      <form onSubmit={onSubmit}>
-        <h1>Register</h1>
-        <hr />
+  if (!localStorage.getItem("token")) {
+    return (
+      <div className="Login">
+        <form onSubmit={onSubmit}>
+          <h1>Register</h1>
+          <hr />
+          <Form.Group controlId="formBasic">
+            <Form.Label>Name</Form.Label>
+            <Form.Control
+              name="name"
+              onChange={onChange}
+              type="text"
+              placeholder="Enter your name"
+              required
+            />
+          </Form.Group>
+          <Form.Group controlId="formBasicEmail">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control
+              name="email"
+              onChange={onChange}
+              type="email"
+              placeholder="Enter email"
+              required
+            />
+            <Form.Text className="text-muted">
+              We'll never share your email with anyone else.
+            </Form.Text>
+          </Form.Group>
+          <Form.Group controlId="formBasicPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              name="password"
+              onChange={onChange}
+              type="password"
+              placeholder="Password"
+              required
+            />
+          </Form.Group>
 
-        <Form.Group controlId="formBasic">
-          <Form.Label>Name</Form.Label>
-          <Form.Control
-            name="name"
-            onChange={onChange}
-            type="text"
-            placeholder="Enter your name"
-            required
-          />
-        </Form.Group>
-        <Form.Group controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            name="email"
-            onChange={onChange}
-            type="email"
-            placeholder="Enter email"
-            required
-          />
-          <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
-          </Form.Text>
-        </Form.Group>
-        <Form.Group controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            name="password"
-            onChange={onChange}
-            type="password"
-            placeholder="Password"
-            required
-          />
-        </Form.Group>
-
-        <Button variant="primary" type="submit">
-          Register My Account
-        </Button>
-      </form>
-    </div>
-  );
+          <Button variant="primary" type="submit" className="mb-2">
+            Register my account and login
+          </Button>
+          <Link to="/login">
+            <Button variant="outline-primary" type="submit">
+              Already signed up? Login here
+            </Button>
+          </Link>
+        </form>
+      </div>
+    );
+  } else {
+    window.location.replace("/home");
+    return <div></div>;
+  }
 };
 
 export default Register;

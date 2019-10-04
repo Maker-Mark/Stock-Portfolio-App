@@ -9,7 +9,7 @@ import Stock from "./Stock";
 class Portfolio extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
+    // console.log(props);
     this.state = {
       portfolio: props.stocks,
       arr: [],
@@ -62,13 +62,13 @@ class Portfolio extends Component {
         }&symbol=${stock} `
       )
         .then(res => {
-          console.log(keyArr.length);
+          // console.log(keyArr.length);
 
           let stockInfo = Object.entries(res.data["Time Series (Daily)"])[0][1];
           //For each stock, multiply how many we have buy the price
           let subTotal = 0;
           this.state.portfolio.forEach(currStk => {
-            console.log(stock + currStk.symbol);
+            // console.log(stock + currStk.symbol);
             if (currStk.symbol == stock) {
               subTotal = 0;
               console.log(stockInfo["4. close"]);
@@ -79,14 +79,14 @@ class Portfolio extends Component {
                 trend: stockInfo["4. close"] - stockInfo["1. open"]
               });
               subTotal += stockInfo["4. close"] * currStk["quantity"];
-              console.log(subTotal);
+              // console.log(subTotal);
               totalTmp += subTotal;
             }
           });
-          console.log(resArr);
+          // console.log(resArr);
           this.setState({ arr: resArr, totalValue: totalTmp, done: true });
-          console.log(totalTmp);
-          console.log(resArr);
+          // console.log(totalTmp);
+          // console.log(resArr);
         })
         .catch(er => console.error(er.message));
     }
@@ -139,6 +139,10 @@ class Portfolio extends Component {
               );
             })}
           </ul>
+          <Form.Text className="text-muted ml-5">
+            Missing some stocks? API limit may have been reached, try reloading
+            in 60 seconds.
+          </Form.Text>
         </div>
       );
     }
