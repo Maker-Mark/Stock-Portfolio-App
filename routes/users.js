@@ -9,8 +9,9 @@ const auth = require("../middleware/RequiredAuth");
 const User = require("../models/User");
 
 router.post("/login/", async (req, res) => {
-  const { email, password } = req.body; //Destructure the request's data
+  let { email, password } = req.body; //Destructure the request's data
   console.log(req.body);
+  email = email.toLowerCase();
   //See if it's valid and see if we can hash it and login
   try {
     //Use the User model's method findOne to check if the email is actually registered
@@ -76,7 +77,7 @@ router.post("/register", async (req, res) => {
     //Go though the MongoDB and see if the email is already registered
     if (dbuser) {
       return res.status(400).json({
-        msg: `Email ${email} is already in use!`
+        err: `Email ${email} is already in use!`
       });
     }
 
