@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const config = require("config");
 const auth = require("../middleware/RequiredAuth");
-const MyUser = require("./User");
+const User = require("../models/User");
 
 router.post("/login/", async (req, res) => {
   let { email, password } = req.body; //Destructure the request's data
@@ -14,7 +14,7 @@ router.post("/login/", async (req, res) => {
   //See if it's valid and see if we can hash it and login
   try {
     //Use the User model's method findOne to check if the email is actually registered
-    let user = await MyUser.findOne({
+    let user = await User.findOne({
       email
     });
     if (!user) {
