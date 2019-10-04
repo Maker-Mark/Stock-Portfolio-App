@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const fetch = require("node-fetch");
-const Stock = require("../Models/Stock"); // Import stock model
+const Stock = require("../models/Stock"); // Import stock model
 
 //First call on the api to get a response given a ticker
 router.get("/:ticker", async (req, res) => {
