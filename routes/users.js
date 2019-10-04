@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const config = require("config");
 const auth = require("../middleware/RequiredAuth");
-const MyUser = require("../models/User");
+const MyUser = require("./User");
 
 router.post("/login/", async (req, res) => {
   let { email, password } = req.body; //Destructure the request's data
