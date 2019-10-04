@@ -4,7 +4,7 @@ import axios from "axios";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
-
+import Search from "../Search";
 // import Transaction from "../components/Transaction";
 import Buy from "./Buy";
 import Portfolio from "./Portfolio";
@@ -65,16 +65,17 @@ class Home extends React.Component {
       );
     } else {
       return (
-        <Container>
-          <Row>
-            <Col>
-              <Portfolio stocks={this.state.stocks} />
-            </Col>
-            <Col>
-              <Buy email={this.state.email} />
-            </Col>
-          </Row>
-        </Container>
+        <Row>
+          <Col>
+            <Portfolio className="ml-4" stocks={this.state.stocks} />
+          </Col>
+          <Col>
+            <Buy email={this.state.email} />
+          </Col>
+          <Col>
+            <Search />
+          </Col>
+        </Row>
       );
     }
   }

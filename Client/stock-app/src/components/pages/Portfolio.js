@@ -95,8 +95,8 @@ class Portfolio extends Component {
   render() {
     if (!this.state.done) {
       return (
-        <div>
-          <h1 className="mt-5 ">Portfolio Value</h1>
+        <div className="ml-4">
+          <h1 className="mt-5 ml-4 ">Portfolio Value</h1>
           <hr></hr>
           <p>
             There's nothing here yet! Do you own any stocks (check your
@@ -121,8 +121,8 @@ class Portfolio extends Component {
       );
     } else {
       return (
-        <div>
-          <h1 className="mt-5 ">
+        <div className="ml-4">
+          <h1 className="mt-5 ml-4 ">
             Portfolio (${this.state.totalValue.toFixed(2)})
           </h1>
           <hr></hr>

@@ -10,7 +10,7 @@ const Stock = props => {
         className="text-center mb-3"
         style={{
           width: "34rem",
-          color: "blue",
+          color: "green",
           fontSize: "18px",
           fontWeight: "bold"
         }}
