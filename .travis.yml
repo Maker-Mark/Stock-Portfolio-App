@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-- stable
+  - stable
 deploy:
   provider: heroku
   api_key:
@@ -8,4 +8,4 @@ deploy:
   app: oscar-stock-api
   on:
     repo: Maker-Mark/Stock-Portfolio-App
-    branch:master
+    branch: master
