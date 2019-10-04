@@ -1,11 +1,7 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
-
-// import "../styles/Login.css";
-
-// import { Route, Link } from "react-router-dom";
 import axios from "axios";
 
 const Register = () => {
@@ -15,20 +11,21 @@ const Register = () => {
     name: ""
   });
 
+  //Pull out the data from the user state
   const { name, email, password } = user;
 
+  //Handle change
   const onChange = e => {
     setUser({ ...user, [e.target.name]: e.target.value });
     console.log(user);
   };
 
+  //On submit, call the backend API
   const onSubmit = e => {
-    console.log(e);
     e.preventDefault();
     if (name === "" || email === "" || password === "") {
       console.log("Please enter all fields danger");
     } else {
-      console.log(user);
       axios
         .post("users/register", {
           name: user.name,
@@ -36,7 +33,6 @@ const Register = () => {
           password: user.password
         })
         .then(res => {
-          console.log(res.data);
           localStorage.setItem("token", res.data.token);
           window.location.replace("/home");
         })

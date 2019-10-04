@@ -1,15 +1,12 @@
 import React, { Component } from "react";
-// import { Link } from "react-router-dom";
 import axios from "axios";
 import Spinner from "react-bootstrap/Spinner";
 import Form from "react-bootstrap/Form";
 
-// import Transaction from "../components/Transaction";
 import Stock from "./Stock";
 class Portfolio extends Component {
   constructor(props) {
     super(props);
-    // console.log(props);
     this.state = {
       portfolio: props.stocks,
       arr: [],
@@ -19,22 +16,24 @@ class Portfolio extends Component {
   }
 
   componentDidMount() {
-    // let val = parseInt(res.data.portfolio["totalValue"]);
     let tickerArr = this.state.portfolio.map(stk => stk["symbol"]);
     let searchStr = "";
     tickerArr.forEach(tick => {
       searchStr += tick + ",";
     });
+
     searchStr = searchStr.substr(0, searchStr.length - 1);
     let strArr = searchStr.split(",");
-    // console.log(strArr);
     strArr.filter((v, i, a) => a.indexOf(v) === i);
+
+    //Make a new SET with the given array of stocks
+    //We want to do this in order to remove duplicate stocks, and migrate them.
     let tickerSet = [...new Set(strArr)];
-    // console.log("STR ARR");
-    // console.log(tickerSet);
-    // tickerSet.join(",");
-    let resArr = [];
-    let totalTmp = 0;
+    let resArr = [],
+      totalTmp = 0;
+
+    //Array of API keys, to minimize api limit (you can make as many as you'd like)
+    //All other API's, including Alpha Advantage cost money for more than 5 calls/API key/ Min
     let keyArr = [
       "0EX3ARX88UZQUM6S",
       "AROSSVE5EUMIFC2R",
@@ -54,7 +53,7 @@ class Portfolio extends Component {
       "P6M5XDBD1ZABM0R3"
     ];
 
-    //   LP7OHCT0JUHMK0C9 , W1R2GKR6A741MTP0
+    // For every stock in our set of ticker symbols, get the daily time series data
     for (let stock of tickerSet) {
       axios(
         `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&apikey=${
@@ -62,13 +61,11 @@ class Portfolio extends Component {
         }&symbol=${stock} `
       )
         .then(res => {
-          // console.log(keyArr.length);
-
+          //Pull out the day's data
           let stockInfo = Object.entries(res.data["Time Series (Daily)"])[0][1];
-          //For each stock, multiply how many we have buy the price
+          //For each stock, keep track of the total value by multiplying how many we have of a stock and the current  price
           let subTotal = 0;
           this.state.portfolio.forEach(currStk => {
-            // console.log(stock + currStk.symbol);
             if (currStk.symbol == stock) {
               subTotal = 0;
               console.log(stockInfo["4. close"]);
@@ -79,14 +76,17 @@ class Portfolio extends Component {
                 trend: stockInfo["4. close"] - stockInfo["1. open"]
               });
               subTotal += stockInfo["4. close"] * currStk["quantity"];
-              // console.log(subTotal);
               totalTmp += subTotal;
             }
           });
-          // console.log(resArr);
-          this.setState({ arr: resArr, totalValue: totalTmp, done: true });
-          // console.log(totalTmp);
-          // console.log(resArr);
+
+          //Set the state with the updated array
+          //We need to do this, so that even if the API fails half way through, some data will get set in the component (not ideal :/)
+          this.setState({
+            arr: resArr,
+            totalValue: totalTmp,
+            done: true
+          });
         })
         .catch(er => console.error(er.message));
     }
@@ -99,8 +99,8 @@ class Portfolio extends Component {
           <h1 className="mt-5 ml-4 ">Portfolio Value</h1>
           <hr></hr>
           <p>
-            There's nothing here yet! Do you own any stocks (check your
-            transactions!).
+            There's nothing here yet! Do you own any stocks Check your
+            transactions...
           </p>
           <Spinner animation="grow" variant="secondary" />
           <Spinner animation="grow" variant="success" />
@@ -115,7 +115,7 @@ class Portfolio extends Component {
             Still loading? Try reloading in 60 seconds.
           </Form.Text>
           <Form.Text className="text-muted">
-            Alpha Vantage API limit reached :({" "}
+            Alpha Vantage API limit reached.{" "}
           </Form.Text>
         </div>
       );

@@ -1,11 +1,10 @@
 import React, { Fragment } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
 import Home from "./components/pages/Home";
-import "./App.css";
 import Transactions from "./components/pages/Transactions";
 
 const App = () => {

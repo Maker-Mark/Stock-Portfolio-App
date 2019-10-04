@@ -1,11 +1,8 @@
 import React from "react";
-// import { Link } from "react-router-dom";
 import axios from "axios";
 import Row from "react-bootstrap/Row";
-import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Search from "../Search";
-// import Transaction from "../components/Transaction";
 import Buy from "./Buy";
 import Portfolio from "./Portfolio";
 
@@ -22,19 +19,27 @@ class Home extends React.Component {
     if (!localStorage.getItem("token")) {
       window.location.replace("/");
     }
+
+    //Make a map to aggregate all the stock purchases you have done in the past
     const myMap = new Map();
     axios("/users/", {
-      headers: { "x-auth-token": localStorage.getItem("token") }
+      headers: {
+        "x-auth-token": localStorage.getItem("token")
+      }
     }).then(response => {
       let stocks = response.data.portfolio.stocks;
+      //Store the balance
       localStorage.setItem("bal", response.data["balance"]);
+      //For each transaction of the stocks, aggregate it all into one key value pair in the map
       stocks.forEach(trn => {
+        //If we have the symbol in the map, update the values
         if (myMap.has(trn.symbol)) {
           myMap.set(trn.symbol, {
             symbol: myMap.get(trn.symbol).symbol,
             quantity:
               parseInt(myMap.get(trn.symbol).quantity) + parseInt(trn.quantity)
           });
+          //Otherwise, create and init the key and value pair
         } else {
           myMap.set(trn.symbol, {
             symbol: trn.symbol,
@@ -43,12 +48,14 @@ class Home extends React.Component {
         }
       });
 
+      //Pull out an array of the values from our map
       let newArr = [];
       for (let [key, val] of myMap.entries()) {
         newArr.push(val);
       }
-
       localStorage.setItem("stocks", newArr);
+
+      //Set the state with our filtered data.
       this.setState({
         stocks: newArr,
         email: response.data["email"],
@@ -56,6 +63,7 @@ class Home extends React.Component {
       });
     });
   }
+
   render() {
     if (!this.state.done) {
       return (

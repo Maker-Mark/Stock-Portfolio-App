@@ -1,9 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Button from "react-bootstrap/Button";
 const StockNavbar = () => {
+  //Log the user out by clearing the JSON web token
   const logout = () => {
     localStorage.clear();
     window.location.href = "/";

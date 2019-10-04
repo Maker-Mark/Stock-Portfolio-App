@@ -1,11 +1,9 @@
 import Card from "react-bootstrap/Card";
 import React from "react";
 
-import ListGroup from "react-bootstrap/ListGroup";
-
 const Transaction = props => {
   return (
-    <>
+    <div>
       <Card style={{ width: "20rem", margin: "1rem" }}>
         <Card>
           <Card.Body>
@@ -14,7 +12,7 @@ const Transaction = props => {
           </Card.Body>
         </Card>
       </Card>
-    </>
+    </div>
   );
 };
 

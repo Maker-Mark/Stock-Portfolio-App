@@ -1,15 +1,13 @@
 import Card from "react-bootstrap/Card";
 import React from "react";
 
-// import ListGroup from "react-bootstrap/ListGroup";
-
 const Stock = props => {
   if (props.trend > 0) {
     return (
       <Card
         className="text-center mb-3"
         style={{
-          width: "34rem",
+          width: "100%",
           color: "green",
           fontSize: "18px",
           fontWeight: "bold"
@@ -28,7 +26,7 @@ const Stock = props => {
       <Card
         className="text-center mb-3"
         style={{
-          width: "34rem",
+          width: "100%",
           color: "red",
           fontSize: "18px",
           fontWeight: "bold"
@@ -47,7 +45,7 @@ const Stock = props => {
       <Card
         className="text-center mb-3"
         style={{
-          width: "34rem",
+          width: "100%",
           color: "gray",
           fontSize: "18px",
           fontWeight: "bold"

@@ -2,11 +2,8 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import ButtonToolbar from "react-bootstrap/ButtonToolbar";
-import Container from "react-bootstrap/Container";
-
 import axios from "axios";
 import "./form.css";
-import { Link } from "react-router-dom";
 
 const Login = () => {
   const [user, setUser] = useState({
@@ -18,7 +15,6 @@ const Login = () => {
 
   const onChange = e => {
     setUser({ ...user, [e.target.name]: e.target.value });
-    // console.log(user);
   };
 
   const onSubmit = e => {
@@ -26,9 +22,6 @@ const Login = () => {
     if (email === "" || password === "") {
       console.log("Please enter all fields danger");
     } else {
-      console.log(user.email);
-      console.log(user.password);
-      console.log("L");
       axios
         .post("users/login", {
           email: user.email,
@@ -36,8 +29,6 @@ const Login = () => {
         })
         .then()
         .then(res => {
-          console.log("EJ:");
-          console.log(res.data);
           localStorage.setItem("token", res.data.token);
           window.location.replace("/home");
         })

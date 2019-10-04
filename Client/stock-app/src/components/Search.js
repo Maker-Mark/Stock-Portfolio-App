@@ -1,12 +1,7 @@
 import FilterResults from "react-filter-search";
 import React, { Component } from "react";
-// import { Link } from "react-router-dom";
 import axios from "axios";
-import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-
-import Col from "react-bootstrap/Col";
 
 class Search extends Component {
   constructor(props) {
@@ -18,6 +13,8 @@ class Search extends Component {
   }
 
   handleChange = event => {
+    //Array of API keys, to minimize api limit (you can make as many as you'd like)
+    //All other API's, including Alpha Advantage cost money for more than 5 calls/API key/ Min
     let keyArr = [
       "0EX3ARX88UZQUM6S",
       "AROSSVE5EUMIFC2R",
@@ -38,7 +35,6 @@ class Search extends Component {
       "FSRE5MEMUBOYXNHN"
     ];
     const { value } = event.target;
-    // this.setState({ value });
 
     axios
       .get(
@@ -51,14 +47,15 @@ class Search extends Component {
         this.setState({ data: response.data["bestMatches"], value });
       });
   };
-  render() {
-    const { data, value } = this.state;
 
+  render() {
+    //Destructure the data and value
+    const { data, value } = this.state;
     if (this.state.data) {
       return (
         <div>
           <Form className="m-5">
-            <h1> Ticker Symbol Search</h1>
+            <h3> Ticker Symbol Search</h3>
             <hr />
             <h3> Results</h3>
             <input type="text" onChange={this.handleChange} />
@@ -80,7 +77,7 @@ class Search extends Component {
               )}
             />
             <Form.Text className="text-muted" style={{ fontSize: "14px" }}>
-              No results? Try again in 60 seconds(API limit reached).
+              No results? Try again in 60 seconds (API limit reached).
             </Form.Text>
           </Form>
         </div>
@@ -89,7 +86,7 @@ class Search extends Component {
       return (
         <div>
           <Form className="m-5">
-            <h1> Ticker Symbol Search </h1>
+            <h3> Ticker Symbol Search </h3>
             <hr />
             <h3>Enter a Symbol</h3>
             <input type="text" value={value} onChange={this.handleChange} />

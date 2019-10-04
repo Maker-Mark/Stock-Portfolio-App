@@ -2,11 +2,8 @@ import React, { Component, useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
-// import { Link } from "react-router-dom";
 
 const Buy = props => {
-  console.log(localStorage.getItem("email"));
-  console.log(props);
   const [purchase, setPurchase] = useState({
     symbol: "",
     quantity: "",
@@ -38,9 +35,8 @@ const Buy = props => {
           { headers: { "x-auth-token": localStorage.getItem("token") } }
         )
         .then(res => {
-          console.log(res.data);
           if (res.data["msg"]) {
-            alert("You dont have enough cash for this purchase");
+            alert("You don't have enough cash for this purchase");
           } else if (!res.data) {
             alert("API limit reached, try in 60 seconds");
           }
@@ -53,7 +49,7 @@ const Buy = props => {
   return (
     <Form className="m-5" onSubmit={onSubmit}>
       <Form.Group controlId="formBasicEmail">
-        <h1> Cash ${localStorage.getItem("bal")}</h1>
+        <h1> Cash ${parseInt(localStorage.getItem("bal")).toFixed(2)}</h1>
         <hr></hr>
         <Form.Label style={{ fontSize: "18px" }}>Ticker Symbol</Form.Label>
 
@@ -86,7 +82,7 @@ const Buy = props => {
         Buy Stocks
       </Button>
       <Form.Text className="text-muted" style={{ fontSize: "14px" }}>
-        Button not working? Try again in 60 seconds. API limit reached :(
+        Button not working? Try again in 60 seconds. API limit reached.
       </Form.Text>
     </Form>
   );

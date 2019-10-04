@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
-// import { Link } from "react-router-dom";
 import axios from "axios";
-// import Button from "react-bootstrap/Button";
 import Transaction from "./Transaction";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
-import Col from "react-bootstrap/Col";
 
 const Transactions = props => {
   const [trans, setTrans] = useState([]);
@@ -13,15 +10,14 @@ const Transactions = props => {
   // const { name, email, password } = home;
   //this is going to get the user data from the database
   useEffect(() => {
+    //If we are not logged in and try to access this page, redirect to home
     if (!localStorage.getItem("token")) {
       window.location.replace("/");
     }
     axios("/users/", {
       headers: { "x-auth-token": localStorage.getItem("token") }
     })
-      // .then(res => console.log(res))
       .then(res => {
-        console.log(res.data.transactions);
         let transArr = res.data.transactions;
         setTrans(transArr);
       })
