@@ -149,13 +149,14 @@ router.post("/buy", auth, async (req, res) => {
     data = data["Global Quote"];
     console.log(data);
     let dateRec = Date();
+    console.log(dateRec);
     //Build a transaction from the data
     const transaction = await {
       symbol: data["01. symbol"],
       price: data["05. price"],
       quantity: numStocks,
       action: "BUY",
-      date: dateRec.toString().substring(0, 15)
+      date: dateRec.toString().substring(0, 21)
     };
     console.log(transaction);
 
@@ -178,6 +179,7 @@ router.post("/buy", auth, async (req, res) => {
       didBuy = true;
     } else {
       console.log("you cant afford this!");
+      return res.json({ msg: "You can't afford this" });
     }
 
     // console.log(user);

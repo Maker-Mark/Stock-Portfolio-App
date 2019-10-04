@@ -30,6 +30,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.7.3",
     "node-fetch": "^2.6.0",
-    "react-bootstrap": "^1.0.0-beta.12"
+    "react-bootstrap": "^1.0.0-beta.12",
+    "react-filter-search": "^1.0.8"
   }
 }
