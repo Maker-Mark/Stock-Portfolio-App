@@ -22,7 +22,7 @@ class Home extends React.Component {
 
     //Make a map to aggregate all the stock purchases you have done in the past
     const myMap = new Map();
-    axios("https://oscar-stock-app.herokuapp.com/users/", {
+    axios("https://oscar-stock-api.herokuapp.com/users/", {
       headers: {
         "x-auth-token": localStorage.getItem("token")
       }

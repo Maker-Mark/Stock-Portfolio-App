@@ -14,7 +14,7 @@ const Transactions = props => {
     if (!localStorage.getItem("token")) {
       window.location.replace("/");
     }
-    axios("/users/", {
+    axios("https://oscar-stock-api.herokuapp.com/users/", {
       headers: { "x-auth-token": localStorage.getItem("token") }
     })
       .then(res => {

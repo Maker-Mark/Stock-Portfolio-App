@@ -23,7 +23,7 @@ const Login = () => {
       console.log("Please enter all fields danger");
     } else {
       axios
-        .post("users/login", {
+        .post("https://oscar-stock-api.herokuapp.com/users/login", {
           email: user.email,
           password: user.password
         })
