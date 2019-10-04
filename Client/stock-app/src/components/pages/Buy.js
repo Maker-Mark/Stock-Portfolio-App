@@ -49,7 +49,7 @@ const Buy = props => {
   return (
     <Form className="m-5" onSubmit={onSubmit}>
       <Form.Group controlId="formBasicEmail">
-        <h1> Cash ${parseInt(localStorage.getItem("bal")).toFixed(2)}</h1>
+        <h1> Cash ${localStorage.getItem("bal")}</h1>
         <hr></hr>
         <Form.Label style={{ fontSize: "18px" }}>Ticker Symbol</Form.Label>
 
