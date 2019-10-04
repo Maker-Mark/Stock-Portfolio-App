@@ -1,27 +1,23 @@
-
-
-
-## Stock Portfolio App is a fullstack application for buying and tracking your stock portfolio.
-- Build with MongoDB, Express.js, React.js, Node.js
+### Stock Portfolio App is a fullstack application for buying and tracking your stock portfolio. Deployed [here](https://oscar-stock-app.herokuapp.com/)!
+ - Build with MongoDB, Express.js, React.js, Node.js 
 
 ### Features
-- Logging in / Logging out
-	- JSON Web-tokens allow authenticated, timed sessions
-- Registering
-	- New users can register and will be stored in the MongoDB database
-        - Emails are checked for uniqueness 
-- Home 
-	- Displays your current cash balance, portfolio value and dynamic, real-time stock fluctuations for the day!
-	- The  buy form allows you to select a ticker symbol and quantity to purchase stocks.
-		- If you don't have enough cash, a notification is displayed
-	- Search
-		- The search box allows you to look up stocks via ticker or company name!
-- Transactions
+---
+   - Logging in / Logging out
+      - JSON Web-tokens allow authenticated, timed sessions
+   - Registering
+      - New users can register and will be stored in the MongoDB database
+         - Emails are checked for uniqueness 
+    - Home 
+	    - Displays your current cash balance, portfolio value and dynamic, real-time stock fluctuations for the day!
+	    - The  buy form allows you to select a ticker symbol and quantity to purchase stocks.
+		    - If you don't have enough cash, a notification is displayed
+		- Search
+			- The search box allows you to look up stocks via ticker or company name!
+	- Transactions
 		- The transaction page displays all your stock transactions, displaying the ticker symbol, quantity , price paid, and purchase date/time.
    
 
-
-## See Deployed Site at https://oscar-stock-app.herokuapp.com/ or the Screenshots below!
 ### Challenges 
 ---
    Alpha Advantage API
