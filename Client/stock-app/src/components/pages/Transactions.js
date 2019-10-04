@@ -3,6 +3,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 // import Button from "react-bootstrap/Button";
 import Transaction from "./Transaction";
+import Row from "react-bootstrap/Row";
+import Container from "react-bootstrap/Container";
+import Col from "react-bootstrap/Col";
 
 const Transactions = props => {
   const [trans, setTrans] = useState([]);
@@ -35,9 +38,10 @@ const Transactions = props => {
   };
 
   return (
-    <div>
+    <Container className="mt-5">
       <h1>Transactions</h1>
-      <ul>
+      <hr></hr>
+      <Row>
         {trans.map(trn => {
           return (
             <Transaction
@@ -49,8 +53,8 @@ const Transactions = props => {
             />
           );
         })}
-      </ul>
-    </div>
+      </Row>
+    </Container>
   );
 };
 

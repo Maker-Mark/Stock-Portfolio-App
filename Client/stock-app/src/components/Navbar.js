@@ -22,8 +22,8 @@ const StockNavbar = () => {
           />
           {" Stock Trading App"}
         </Navbar.Brand>
-        <Nav className="mr-auto">
-          <Link className="nav-link" to="/Portfolio">
+        <Nav className="mr-auto" href>
+          <Link className="nav-link" to="/home">
             Portfolio
           </Link>
           <Link className="nav-link" to="/Transactions">
@@ -32,13 +32,23 @@ const StockNavbar = () => {
         </Nav>
         <Nav>
           {localStorage.getItem("token") ? (
-            <Button onClick={logout} className="nav-link" to="/home">
-              Logout
-            </Button>
+            <Link to="/home">
+              {" "}
+              <Button
+                onClick={logout}
+                className="nav-link"
+                style={{ color: "white", width: "100px" }}
+                to="/home"
+              >
+                Logout
+              </Button>
+            </Link>
           ) : (
-            <Button href="/login" className="nav-link" to="/login">
-              Login/Register
-            </Button>
+            <Link to="/login">
+              <Button className="nav-link" style={{ color: "white" }}>
+                Login/Register
+              </Button>
+            </Link>
           )}
         </Nav>
       </Navbar>

@@ -3,6 +3,7 @@ import React from "react";
 import axios from "axios";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
+import Col from "react-bootstrap/Col";
 
 // import Transaction from "../components/Transaction";
 import Buy from "./Buy";
@@ -66,8 +67,12 @@ class Home extends React.Component {
       return (
         <Container>
           <Row>
-            <Portfolio stocks={this.state.stocks} />
-            <Buy email={this.state.email} />
+            <Col>
+              <Portfolio stocks={this.state.stocks} />
+            </Col>
+            <Col>
+              <Buy email={this.state.email} />
+            </Col>
           </Row>
         </Container>
       );

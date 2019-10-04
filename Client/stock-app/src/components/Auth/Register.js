@@ -37,14 +37,19 @@ const Register = () => {
           localStorage.setItem("token", res.data.token);
           window.location.replace("/home");
         })
-        .catch(err => console.error("Login Error:" + err.message));
+        .catch(err => {
+          alert(`Email ${user.email} is already in use`);
+          console.error("Login Error:" + err.message);
+        });
     }
   };
 
   return (
-    <>
-      <h1>Register</h1>
-      <Form className="m-5" onSubmit={onSubmit}>
+    <div className="Login">
+      <form onSubmit={onSubmit}>
+        <h1>Register</h1>
+        <hr />
+
         <Form.Group controlId="formBasic">
           <Form.Label>Name</Form.Label>
           <Form.Control
@@ -78,14 +83,12 @@ const Register = () => {
             required
           />
         </Form.Group>
-        <Form.Group controlId="formBasicCheckbox">
-          <Form.Check type="checkbox" label="Remember me" />
-        </Form.Group>
+
         <Button variant="primary" type="submit">
-          Submit
+          Register My Account
         </Button>
-      </Form>
-    </>
+      </form>
+    </div>
   );
 };
 

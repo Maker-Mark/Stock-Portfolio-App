@@ -16,15 +16,6 @@ const Buy = props => {
 
   //Destructure  the data from the purchase
   const { symbol, quantity, email } = purchase;
-  // useEffect(() => {
-  //   axios
-  //     .get("/users")
-  //     .then(res => {
-  //       console.log(res);
-  //       localStorage.setItem("bal", res.data["balance"]);
-  //     })
-  //     .catch(err => console.error("Login Error:" + err.message));
-  // }, []);
 
   const onChange = e => {
     setPurchase({ ...purchase, [e.target.name]: e.target.value });
@@ -57,30 +48,36 @@ const Buy = props => {
     <Form className="m-5" onSubmit={onSubmit}>
       <Form.Group controlId="formBasicEmail">
         <h1> Cash ${localStorage.getItem("bal")}</h1>
+        <hr></hr>
+        <Form.Label style={{ fontSize: "18px" }}>Ticker Symbol</Form.Label>
+
         <Form.Control
           name="symbol"
           onChange={onChange}
           type="text"
-          placeholder="Enter stock symbol"
+          placeholder="Enter Ticker Symbol"
+          size="lg"
           required
         />
-        <Form.Text className="text-muted">
-          Make sure you reviewed your ticker!
+        <Form.Text className="text-muted" style={{ fontSize: "18px" }}>
+          Make sure you review your ticker symbol!
         </Form.Text>
       </Form.Group>
       <Form.Group controlId="formBasicPassword">
-        <Form.Label>Quantity</Form.Label>
+        <Form.Label style={{ fontSize: "18px" }}>Quantity</Form.Label>
         <Form.Control
           name="quantity"
           onChange={onChange}
           type="number"
+          min="0"
           placeholder="Number of Stocks"
+          size="lg"
           required
         />
       </Form.Group>
 
-      <Button variant="primary" type="submit">
-        BUY
+      <Button variant="danger" type="submit">
+        Buy Stocks
       </Button>
     </Form>
   );

@@ -6,7 +6,7 @@ import ListGroup from "react-bootstrap/ListGroup";
 const Transaction = props => {
   return (
     <>
-      <Card style={{ width: "18rem" }}>
+      <Card style={{ width: "20rem", margin: "1rem" }}>
         <Card>
           <Card.Body>
             {props.action} {props.quantity} {props.ticker} Stocks @{" "}
