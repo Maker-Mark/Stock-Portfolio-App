@@ -1,0 +1,5 @@
+{
+  "mongoURI": "mongodb+srv://hackny:Winner@localroasters-1mhoa.mongodb.net/TTP?retryWrites=true&w=majority",
+  "jwtSecret": "My_SECRET_KEY",
+  "API_KEY": "W1R2GKR6A741MTP0"
+}
